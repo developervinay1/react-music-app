@@ -91,4 +91,10 @@ header > div > h2 {
   .songWrapper > img {
     width: 100%;
   }
+
+  /* Post Music Page Form */
+  .mobileWidth {
+    max-width: 100% !important;
+    padding: 20px;
+  }
 }

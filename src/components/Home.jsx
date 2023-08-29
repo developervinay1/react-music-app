@@ -33,6 +33,7 @@ export default function Home() {
           <h1>Loading</h1>
         ) : (
           songs.map((data, index) => {
+            console.log(data.musicURL)
             return (
               <div
               className="col-lg-3 col-md-4 col-sm-6 col-12"

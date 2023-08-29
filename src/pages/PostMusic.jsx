@@ -158,11 +158,11 @@ export default function PostMusic() {
 
   return (
     <div>
-      <div className="bg-white text-dark p-5 mt-5" style={{maxWidth: "50rem", margin: "auto"}}>
+      <div className="bg-white text-dark p-md-5 py-5 mt-5" style={{maxWidth: "50rem", margin: "auto"}}>
         <div>
           <div>
             <h3 className="text-center">Share Your Music</h3>
-            <div className="d-flex flex-column gap-3" style={{maxWidth: "50%", margin: "auto"}}>
+            <div className="d-flex flex-column gap-3 mobileWidth" style={{maxWidth: "50%", margin: "auto"}}>
             <input
               type="text"
               placeholder="Song Name"
