@@ -81,6 +81,23 @@ header > div > h2 {
 
 /* Add any additional styles you need */
 
+@media screen and (max-width: 320px) {
+  .songWrapper {
+    width: 100%;
+    margin: 30px;
+  }
+
+  .songWrapper > img {
+    width: 100%;
+  }
+
+  /* Post Music Page Form */
+  .mobileWidth {
+    max-width: 100% !important;
+    padding: 20px;
+  }
+}
+
 
 @media screen and (min-width: 320px) and (max-width: 480px) {
   .songWrapper {
