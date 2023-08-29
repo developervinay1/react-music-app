@@ -10,22 +10,18 @@ export default function Header() {
         {
             name: "Upload Music",
             url: "/uploadmusic"
-        },
-        {
-            name: "Contact",
-            url: "/contact"
         }
     ]
   return (
     <div>
         <header>
             <div id="brandLogo">
-                <h2>Vinay's Music</h2>
+                <h5>Vinay's Music</h5>
             </div>
             <div id="menu">
                 <ul>
                     {menuItems.map((data, index) => {
-                        return <li key={index}><Link to={data.url}>{data.name}</Link></li>
+                        return <li key={index}><Link to={data.url} className='text-white text-decoration-none'>{data.name}</Link></li>
                     })}
                 </ul>
             </div>

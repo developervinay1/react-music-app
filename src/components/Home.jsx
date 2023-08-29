@@ -1,64 +1,69 @@
-import { collection, onSnapshot, query } from 'firebase/firestore';
-import React, { useEffect, useRef, useState } from 'react';
-import { db } from '../../firebase';
+import { collection, onSnapshot, query } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
+import { db } from "../../firebase";
+import ReactPlayer from "react-player";
 
 export default function Home() {
-    const [songs, setSongs] = useState([]);
+  const [songs, setSongs] = useState([]);
+  const [currentSongIndex, setCurrentSongIndex] = useState(0);
 
-    const audioRefs = useRef({});
-    const [playingSongId, setPlayingSongId] = useState(null);
+  useEffect(() => {
+    const musicRef = collection(db, "songs");
+    const q = query(musicRef);
 
-    const handleTogglePlay = (songId) => {
-        if (playingSongId === songId) {
-            audioRefs.current[songId].pause();
-            setPlayingSongId(null);
-        } else {
-            if (playingSongId !== null) {
-                audioRefs.current[playingSongId].pause();
-            }
-            audioRefs.current[songId].play();
-            setPlayingSongId(songId);
-        }
-    }
+    onSnapshot(q, (snapshot) => {
+      const musicData = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
 
-    useEffect(() => {
-        const musicRef = collection(db, "songs");
-        const q = query(musicRef);
+      setSongs(musicData);
+    });
+  }, []);
 
-        onSnapshot(q, (snapshot) => {
-            const musicData = snapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data()
-            }));
+  const playNextSong = () => {
+    const nextIndex = (currentSongIndex + 1) % songs.length;
+    setCurrentSongIndex(nextIndex);
+  };
 
-            setSongs(musicData);
-        });
-    }, []);
-
-    return (
-        <div>
-            <div className='flex justify-between items-start'>
-            {songs.length === 0 ? <h1>Loading</h1> : (
-                songs.map((data) => {
-                    const isPlaying = playingSongId === data.id;
-                    return (
-                        <div className='w-1/4 overflow-hidden rounded relative' key={data.id}>
-                            <img className='w-full mt-8' src={data.imgURL} />
-                            <audio
-                                className="audio songAudioPlayer mt-2"
-                                ref={el => (audioRefs.current[data.id] = el)}
-                            >
-                                <source src={data.musicURL} type="audio/mpeg" />
-                            </audio>
-                            <h5 className='mt-2'>Song: {data.title} by Prabh</h5>
-                            <button onClick={() => handleTogglePlay(data.id)}>
-                                {isPlaying ? 'Pause' : 'Play'}
-                            </button>
-                        </div>
-                    );
-                })
-            )}
-            </div>
-        </div>
-    );
+  return (
+    <div className="container mt-5">
+      <div className="row gap-3 justify-content-center">
+        {songs.length === 0 ? (
+          <h1>Loading</h1>
+        ) : (
+          songs.map((data, index) => {
+            return (
+              <div
+              className="col-lg-3 col-md-4 col-sm-6 col-12"
+                style={{ boxShadow: "0px 6px 8px -2px #0000004d" }}
+                key={data.id}
+              >
+                <img
+                  src={data.imgURL}
+                  style={{width: "100%", height: "250px", objectFit: "cover"}}
+                  alt={`Album cover for ${data.title}`}
+                />
+                <div>
+                  <div>
+                    <ReactPlayer
+                      className="audioPlayer"
+                      url={data.musicURL}
+                      controls
+                      playing={index > 0 && index === currentSongIndex}
+                      onPlay={() => setCurrentSongIndex(index)}
+                      onEnded={playNextSong}
+                    />
+                  </div>
+                  <h6 className="p-2">
+                    Song: {data.title}
+                  </h6>
+                </div>
+              </div>
+            );
+          })
+        )}
+      </div>
+    </div>
+  );
 }

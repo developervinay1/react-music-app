@@ -10,6 +10,10 @@ html, body {
   width: 100%;
   height: 100%;
   font-family: 'Open Sans', sans-serif;
+  background-image: url("./assets/bg.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+  color: white;
 }
 
 button {
@@ -39,4 +43,52 @@ header > div > h2 {
 
 #menu > ul > li {
   list-style: none;
+}
+
+/* Global styles or component-specific styles */
+.bottomPlayer.visible {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.bottomPlayer {
+  position: fixed;
+  bottom: 100px; /* Adjust this value to your desired space */
+  left: 0;
+  right: 0;
+  background-color: white;
+  padding: 4px;
+  box-shadow: 0px 0px 8px -2px #0000004d;
+  display: flex;
+  align-items: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.5s, transform 0.5s;
+  transform: translateY(100%);
+}
+
+.audioPlayer {
+  width: 100% !important;
+  height: 43px !important;
+  margin-top: 14px;
+}
+
+.audioPlayer > audio {
+  border-radius: 99999px;
+}
+
+
+/* Add any additional styles you need */
+
+
+@media screen and (min-width: 320px) and (max-width: 480px) {
+  .songWrapper {
+    width: 100%;
+    margin: 30px;
+  }
+
+  .songWrapper > img {
+    width: 100%;
+  }
 }

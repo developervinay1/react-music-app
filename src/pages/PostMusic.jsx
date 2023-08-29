@@ -127,6 +127,10 @@ export default function PostMusic() {
     setMusicData({ ...musicData, title: e.target.value });
   };
 
+  const handleSinger = (e) => {
+    setMusicData({ ...musicData, singer: e.target.value });
+  };
+
   const handleBlogContent = (e) => {
     setMusicData({ ...musicData, description: e.target.value });
   };
@@ -154,70 +158,85 @@ export default function PostMusic() {
 
   return (
     <div>
-      <div class="bg-grey-lighter min-h-screen flex flex-col">
-        <div class="container max-w-lg mx-auto flex-1 flex flex-col items-center justify-center px-2">
-          <div class="bg-white px-6 py-8 rounded shadow-md text-black w-full">
-            <h1 class="mb-8 text-3xl text-center">Share Your Music</h1>
+      <div className="bg-white text-dark p-5 mt-5" style={{maxWidth: "50rem", margin: "auto"}}>
+        <div>
+          <div>
+            <h3 className="text-center">Share Your Music</h3>
+            <div className="d-flex flex-column gap-3" style={{maxWidth: "50%", margin: "auto"}}>
             <input
               type="text"
-              class="block border border-grey-light w-full p-3 rounded mb-4"
               placeholder="Song Name"
+              className="p-3"
               onChange={handleTitle}
+            />
+
+            <input
+              type="text"
+              className="p-3"
+              placeholder="Singer Name"
+              onChange={handleSinger}
             />
 
             <textarea
               type="textarea"
-              class="block border border-grey-light w-full h-[200px] p-3 rounded mb-4"
+              className="p-3"
               placeholder="Song Information"
               onChange={handleBlogContent}
             />
 
             <label
               for="countries"
-              class="block mb-2 text-sm font-medium text-gray-900"
             >
               Select Language
             </label>
             <select
               onChange={categoryHandle}
               id="countries"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="py-3 bg-dark text-white border-0 rounded px-3"
             >
               {categoryItems.map((items) => {
                 return <option key={items.name}>{items.name}</option>;
               })}
             </select>
-
+            <label className="rounded">
+                Select Music File
+            </label>
             <input
               type="file"
+              className="border p-3"
               placeholder="Pick Image"
-              className="block border border-grey-light w-full p-3 rounded mb-4 mt-4"
               onChange={(e) => setFile(e.target.files[0])}
             />
 
+            <label>
+                Select Music Image
+            </label>
+
             <input
               type="file"
+              className="border p-3"
               placeholder="Pick Image"
-              className="block border border-grey-light w-full p-3 rounded mb-4 mt-4"
               onChange={(e) => setImg(e.target.files[0])}
             />
 
             <button
+            className="p-3 text-white border-0"
               type="submit"
               onClick={addDataToFirebase}
-              style={{ backgroundColor: "#fb923c" }}
               disabled={progress !== null && progress < 100}
-              class="w-full text-center py-3 rounded bg-green text-white hover:bg-green-dark focus:outline-none my-1"
+              style={{ backgroundColor: progress !== null && progress < 100 ? "gray" : "#fb923c" }}
             >
               Publish Music
             </button>
+            </div>
+
+
           </div>
 
-          <div class="text-grey-dark mt-6">
+          <div className="text-center mt-3">
             Want to boost your content ?
             <Link
               to={"/signup"}
-              class="ml-2 text-orange-400 no-underline border-b border-blue text-blue"
             >
               Get Premium
             </Link>
